@@ -1,0 +1,26 @@
+{
+    "Format": "2.8.0",
+    "Changes": [
+        {
+            "Action": "Load",
+            "Target": "Mods/{{ModId}}/HorseFluteIcon",
+            "FromFile": "assets/HorseFluteIcon.png"
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Powers",
+            "Entries": {
+                "{{ModId}}_HorseFlute": {
+                    "DisplayName": "{{i18n: Name}}",
+                    "Description": "{{i18n: Description}}",
+                    "TexturePath": "Mods/{{ModId}}/HorseFluteIcon",
+                    "TexturePosition": {
+                        "X": 0,
+                        "Y": 0
+                    },
+                    "UnlockedCondition": "PLAYER_HAS_ITEM Current (O)911"
+                }
+            }
+        }
+    ]
+}

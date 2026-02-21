@@ -1,0 +1,11 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+.idea/
+Properties/
+/WalletHorseFlute.csproj
+/WalletHorseFlute.csproj.DotSettings
+/WalletHorseFlute.sln
+/WalletHorseFlute/WalletHorseFlute.csproj
