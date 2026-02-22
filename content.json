@@ -1,0 +1,33 @@
+{
+    "Format": "2.8.0",
+    "ConfigSchema": {
+        "Hotkey": {
+            "Type": "KeybindList",
+            "Default": "Q",
+            "Label": "{{i18n: Config.Hotkey.Label}}",
+            "Tooltip": "{{i18n: Config.Hotkey.Tooltip}}"
+        }
+    },
+    "Changes": [
+        {
+            "Action": "EditData",
+            "Target": "Data/Powers",
+            "Entries": {
+                "{{ModId}}_HorseFlute": {
+                    "DisplayName": "{{i18n: HorseFlute.Name}}",
+                    "Description": "{{i18n: HorseFlute.Description}}",
+                    "TexturePath": "Maps/springobjects",
+                    "TextureSourceRect": { "X": 256, "Y": 592, "Width": 16, "Height": 16 },
+                    "UnlockedCondition": "PLAYER_MOD_DATA Current {{ModId}}_HorseFlute_Unlocked true"
+                }
+            }
+        },
+        {
+            "Action": "EditData",
+            "Target": "Strings/Objects",
+            "Entries": {
+                "HorseFlute_Description": "{{i18n: HorseFlute.Description}}"
+            }
+        }
+    ]
+}

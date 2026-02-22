@@ -25,5 +25,12 @@ public sealed class ModConfig
             reset: Init,
             save: () => Helper.WriteConfig(this)
         );
+        configMenu.AddKeybindList(
+            mod: ModManifest,
+            name: () => I18n.Config_Hotkey_Label(),
+            tooltip: () => I18n.Config_Hotkey_Tooltip(),
+            getValue: () => Hotkey,
+            setValue: value => Hotkey = value
+        );
     }
 }

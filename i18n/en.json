@@ -1,0 +1,13 @@
+{
+    "Config.Hotkey.Label": "\"Summon Horse\" Hotkey",
+    "Config.Hotkey.Tooltip": "The hotkey(s) used to summon your horse when the Horse Flute is in your Special Items tab.",
+    "HorseFlute.Name": "Horse Flute",
+    "HorseFlute.Description": "A curious flute that summons your horse. When purchased, it is permanently bound to your Special Items tab.",
+    "HUD.HorseFluteAquired": "Horse Flute acquired!",
+    "Log.RemovedFromShop": "Removed Horse Flute from Qi's shop stock since player already owns it.",
+    "Log.ShopMenuPatchError": "Error in ShopMenu postfix patch: {{ex}}",
+    "Log.ShopMenuConstructorsPatched": "Patched {{count}} ShopMenu constructors with Harmony.",
+    "Log.ShopMenuConstructorsNotPatched": "Failed to patch any ShopMenu constructors with Harmony: {{ex}}",
+    "Log.ContentPatcherRequired": "Content Patcher is required for this mod to work. Please install Content Patcher and try again.",
+    "Log.SummonFailed": "Failed to summon horse. Make sure you have the Horse Flute in your Special Items tab and try again."
+}

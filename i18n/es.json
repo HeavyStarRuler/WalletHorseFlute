@@ -1,0 +1,13 @@
+{
+    "Config.Hotkey.Label": "Tecla rápido \"Invocar caballo\"",
+    "Config.Hotkey.Tooltip": "La tecla utilizada para convocar a tu caballo cuando la flauta de caballo está en la pestaña de Artículos especiales.",
+    "HorseFlute.Name": "Flauta de caballo",
+    "HorseFlute.Description": "Una curiosa flauta que convoca a tu caballo. Al comprarlo, queda permanentemente vinculado a la pestaña de Objetos Especiales.",
+    "HUD.HorseFluteAquired": "¡Flauta de caballo adquirida!",
+    "Log.RemovedFromShop": "Se eliminó la Flauta de Caballo del stock de la tienda de Qi porque el jugador ya la posee.",
+    "Log.ShopMenuPatchError": "Error en el parche de postfix de ShopMenu: {{ex}}",
+    "Log.ShopMenuConstructorsPatched": "Constructores de ShopMenu parcheados {{count}} con Harmony.",
+    "Log.ShopMenuConstructorsNotPatched": "No se logró parchear ningún constructor de ShopMenu con Harmony: {{ex}}",
+    "Log.ContentPatcherRequired": "Content Patcher es necesario para que este mod funcione. Por favor, instala Content Patcher e inténtalo de nuevo.",
+    "Log.SummonFailed": "No conseguí invocar a caballo. Asegúrate de tener la Flauta de Caballo en la pestaña de Objetos Especiales y vuelve a intentarlo."
+}
