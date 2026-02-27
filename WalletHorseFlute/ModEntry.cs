@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
+using StardewValley.Delegates;
+using StardewValley.Triggers;
 using WalletHorseFlute.Helpers;
 
 namespace WalletHorseFlute
@@ -15,60 +17,23 @@ namespace WalletHorseFlute
         internal static IModHelper ModHelper { get; private set; } = null!;
         internal static ModConfig Config { get; private set; } = null!;
 
-        const string horseFluteID = "(O)911";
-        const string powerID = "HorseFlute";
-
         public override void Entry(IModHelper helper)
         {
             ModMonitor = Monitor;
             ModHelper = helper;
+
             Config = helper.ReadConfig<ModConfig>();
             
-            I18n.Init(helper.Translation);
-            
-            var harmony = new Harmony(this.ModManifest.UniqueID);
+            Utils.ModHelper = helper;
 
-            try
-            {
-                harmony.PatchAll(System.Reflection.Assembly.GetExecutingAssembly());
-            }
-            catch (Exception ex)
-            {
-                Log.Error(I18n.Log_HarmonyPatchesNotApplied(ex));
-            }
+            I18n.Init(helper.Translation);
 
             helper.Events.GameLoop.GameLaunched += this.OnGameLaunched;
+            helper.Events.GameLoop.SaveCreated += this.OnSaveLoaded;
+            helper.Events.GameLoop.SaveLoaded += this.OnSaveLoaded;
             helper.Events.GameLoop.DayStarted += this.OnDayStarted;
             helper.Events.Player.InventoryChanged += this.OnInventoryChanged;
             helper.Events.Input.ButtonPressed += this.OnButtonPressed;
-
-            // [DEBUG TOOL] Remove when done testing
-            helper.ConsoleCommands.Add("toggleflute", "Toggles the Horse Flute power on/off for the local player.\n\nUsage: toggle_flute", (command, args) =>
-            {
-                if (!Context.IsWorldReady)
-                {
-                    Log.Error("You must load a save first!");
-                    return;
-                }
-
-                Farmer who = Game1.player;
-                string key = "HeavyStarRuler.WalletHorseFlute_HorseFlute_IsUnlocked";
-
-                if (who.modData.ContainsKey(key))
-                {
-                    who.modData.Remove(key);
-                    Log.Info("Horse Flute power REMOVED.");
-                }
-                else
-                {
-                    who.modData[key] = "true";
-                    Log.Info("Horse Flute power ADDED.");
-                }
-
-                // [TODO] Might not ever need something like this
-                // Refresh the UI/Data/Powers cache immediately
-                // Helper.GameContent.InvalidateCache("Data/Powers");
-            });
         }
 
         private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
@@ -80,11 +45,12 @@ namespace WalletHorseFlute
                 return;
             }
 
-            ContentPatcher.RegisterToken(ModManifest, "HorseFlute_IsUnlocked", () =>
+            ContentPatcher.RegisterToken(ModManifest, "ModEnabled", () =>
             {
-                if (!Context.IsWorldReady) return null;
-                return new[] { Utils.IsPowerUnlocked(Game1.player, powerID) ? "true" : "false" };
+                return new[] { Config.Enabled ? "true" : "false" };
             });
+
+            TriggerActionManager.RegisterAction("HeavyStarRuler.WalletHorseFluteCore_UnlockHorseFlutePower", HandleUnlockAction);
 
             var configMenu = ModHelper.ModRegistry.GetApi<IGenericModConfigMenuApi>("spacechase0.GenericModConfigMenu");
             if (configMenu is null) return;
@@ -94,57 +60,94 @@ namespace WalletHorseFlute
                 reset: () => Config = new ModConfig(),
                 save: () => 
                 {
-                    // Save the new settings to the config.json file
                     ModHelper.WriteConfig(Config);
-
-                    // TRIGGER: If mod is toggled OFF but player still has the power
-                    if (Context.IsWorldReady && !Config.Enabled && Utils.IsPowerUnlocked(Game1.player, powerID))
-                        Utils.RevertModChanges(Game1.player);
+                    if (Context.IsWorldReady)
+                    {
+                        if (!Config.Enabled)
+                        {
+                            // If mod was just turned "OFF"
+                            Utils.RevertModChanges(Game1.player);
+                        }
+                        else
+                        {
+                            // If mod was just turned "ON"
+                            Utils.DumpUnnecessaryFlutes(Game1.player);
+                        }
+                    }
+                    // Force a full refresh so Content Patcher updates the UI immediately
+                    Helper.GameContent.InvalidateCache("Data/Powers");
+                    Helper.GameContent.InvalidateCache("Data/Shops");
                 }
             );
 
             configMenu.AddBoolOption(
                 mod: ModManifest,
-                name: () => "Enabled",
-                tooltip: () => "If disabled, the power is removed and the physical flute is returned to your inventory.",
+                name: () => I18n.Config_EnableMod_Label(),
+                tooltip: () => I18n.Config_EnableMod_Tooltip(),
                 getValue: () => Config.Enabled,
                 setValue: value => Config.Enabled = value
             );
 
             configMenu.AddKeybindList(
                 mod: ModManifest,
-                name: () => "Summon Hotkey",
-                tooltip: () => "The key used to whistle for your horse.",
+                name: () => I18n.Config_Hotkey_Label(),
+                tooltip: () => I18n.Config_Hotkey_Tooltip(),
                 getValue: () => Config.Hotkey,
                 setValue: value => Config.Hotkey = value
             );
         }
 
+        private void OnSaveLoaded(object? sender, EventArgs e)
+        {
+            if (!Context.IsWorldReady) return;
+            // Let's check to see if the modData needs to initialize
+            Utils.InitializeModData(Game1.player);
+        }
+
         private void OnDayStarted(object? sender, DayStartedEventArgs e)
         {
+            if (!Context.IsWorldReady) return;
             // Dump any flutes that might be hanging around
             Farmer who = Game1.player;
-            Utils.DumpUnnecessaryFlutes(who, powerID, horseFluteID);
+            Utils.DumpUnnecessaryFlutes(who);
         }
 
         private void OnInventoryChanged(object? sender, InventoryChangedEventArgs e)
         {
             if (!Context.IsWorldReady) return;
-
             // Dump any flutes that might be hanging around
             Farmer who = Game1.player;
-            Utils.DumpUnnecessaryFlutes(who, powerID, horseFluteID);
+            Utils.DumpUnnecessaryFlutes(who);
         }
 
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
         {
             if (!Context.IsWorldReady) return;
 
+            // If the mod's disabled, no need to run checks on this event
+            if (!Config.Enabled) return;
+
+            // If the hotkey is pressed... 
             Farmer who = Game1.player;
-            // [TODO] Remove when done debugging
             if (Config.Hotkey.JustPressed())
-                Log.Info($"Hotkey pressed & {who.Name} {(Utils.IsPowerUnlocked(who, powerID) ? "has" : "does NOT have")} the required power");
-            if (Config.Hotkey.JustPressed() && Utils.IsPowerUnlocked(who, powerID)) Utils.SummonHorse(who);
+            {
+                // ...and the player has the power...
+                if (Utils.IsPowerUnlocked(who))
+                {
+                    // ...summon the horse
+                    Utils.SummonHorse(who);
+                }
+            }
+        }
+
+        /// <inheritdoc cref="TriggerActionDelegate" />
+        public static bool HandleUnlockAction(string[] args, TriggerActionContext context, out string error)
+        {
+            error = string.Empty;
+            // Unlock the power for the player
+            Farmer who = Game1.player;
+            Utils.DoPowerUnlock(who);
+            return true;
         }
     }
 }

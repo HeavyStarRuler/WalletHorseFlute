@@ -1,0 +1,12 @@
+{
+    "Config.EnableMod.Label": "启用模组",
+    "Config.EnableMod.Tooltip": "启用或禁用此模组。",
+    "Config.Hotkey.Label": "呼唤马",
+    "Config.Hotkey.Tooltip": "当马笛出现在特殊物品标签页时，用来召唤马匹的快捷键。",
+    "HorseFlute.Name": "马笛",
+    "HorseFlute.Description": "一支奇特的笛子，能召唤你的马。购买后，它会永久绑定在你的特殊物品标签页。",
+    "Log.HarmonyPatchesNotApplied": "未能应用Harmony补丁：{{ex}}",
+    "Log.ContentPatcherRequired": "这个模组需要Content Patcher才能正常工作。请安装Content Patcher并重新尝试。",
+    "Log.SummonFailed": "没能召唤出马。确保你在特殊物品标签里有马笛，然后再试一次。",
+    "Log.ModDisabledRevert": "模组已成功禁用！马笛已返回背包，相关能力已移除。"
+}

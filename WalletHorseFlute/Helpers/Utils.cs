@@ -6,57 +6,52 @@ namespace WalletHorseFlute.Helpers;
 
 public class Utils
 {
-    static readonly string powerPrefix = "HeavyStarRuler.WalletHorseFlute_";
-    static readonly string powerUnlockedSuffix = "_IsUnlocked";
-    static readonly string horseFluteID = "(O)911";
+    public const string PowerID = "HorseFlute";
+    public const string HorseFluteID = "(O)911";
+    public const string PowerPrefix = "HeavyStarRuler.WalletHorseFlute_";
+    public const string PowerUnlockedSuffix = "_IsUnlocked";
 
-    internal static IModHelper Helper { get; private set; } = null!;
+    internal static IModHelper ModHelper { get; set; } = null!;
 
-    public static bool IsPowerUnlocked(Farmer who, string powerID)
+    public static void InitializeModData(Farmer who)
     {
-        // If the modData key doesn't exist, the power is definitely not unlocked
-        if (!who.modData.ContainsKey(powerPrefix + powerID + powerUnlockedSuffix))
-            return false;
-
-        // If the modData key exists, then just return if the value is 'true' or not
-        return who.modData[powerPrefix + powerID + powerUnlockedSuffix] == "true";
-
-        // [TODO] Shouldn't need this, so we'll delete it when we're sure
-        // If the modData key exists but the conditions aren't met, the power is also not unlocked
-        // var powerData = DataLoader.Powers(Game1.content)[powerPrefix + powerID];
-        // return GameStateQuery.CheckConditions(powerData.UnlockedCondition, who.currentLocation, who);
+        // Only set it to false if the key is completely missing
+        string key = PowerPrefix + PowerID + PowerUnlockedSuffix;
+        if (!who.modData.ContainsKey(key)) who.modData[key] = "false";
     }
 
-    public static void DoPowerUnlock(Farmer who, string powerID, Item? flute = null)
+    public static bool IsPowerUnlocked(Farmer who)
     {
-        // Check if the player already has the power
-        if (IsPowerUnlocked(who, powerID))
-            return;
+        // Return whether the modData key exists and what its value is
+        string key = PowerPrefix + PowerID + PowerUnlockedSuffix;
+        return who.modData.ContainsKey(key) && who.modData[key] == "true";
+    }
+
+    public static void DoPowerUnlock(Farmer who)
+    {
+        // Leave if the player already has the power, or the mod is disabled
+        if (IsPowerUnlocked(who)) return;
 
         // Set a custom player stat to indicate that the player has the power
-        who.modData[powerPrefix + powerID + powerUnlockedSuffix] = "true";
-
-        // If there's a flute, remove it from the player's inventory
-        if (flute != null) who.removeItemFromInventory(flute);
+        who.modData[PowerPrefix + PowerID + PowerUnlockedSuffix] = "true";
 
         // Close any menus so the player is visible for the animation
         Game1.exitActiveMenu();
 
-        // Trigger the "Hold Up Item" pose
-        who.holdUpItemThenMessage(flute);
+        // Create a temporary item instance for the pose
+        Item fluteAnimationItem = ItemRegistry.Create(HorseFluteID);
 
-        // [TODO] Revisit if necessary
-        // Clear the cache so the Special Items tab updates
-        // Helper.GameContent.InvalidateCache("Data/Powers");
+        // Trigger the "Hold Up Item" pose
+        who.holdUpItemThenMessage(fluteAnimationItem);
     }
 
     public static void SummonHorse(Farmer who)
     {
         // If the player doesn't have the power, do nothing
-        if (!IsPowerUnlocked(who, "HorseFlute"))
+        if (!ModEntry.Config.Enabled || !IsPowerUnlocked(who))
             return;
 
-        Item fluteItem = ItemRegistry.Create(horseFluteID);
+        Item fluteItem = ItemRegistry.Create(HorseFluteID);
 
         if (fluteItem is StardewValley.Object fluteObject)
         {
@@ -65,15 +60,18 @@ public class Utils
         }
     }
 
-    public static void DumpUnnecessaryFlutes(Farmer who, string powerID, string fluteID)
+    public static void DumpUnnecessaryFlutes(Farmer who)
     {
+        // If mod is disabled, jump out of here
+        if (!ModEntry.Config.Enabled) return;
+
         // If the player has any flutes in their inventory, let's get rid of them
-        var flute = who.Items.FirstOrDefault(i => i?.QualifiedItemId == fluteID);
+        var flute = who.Items.FirstOrDefault(i => i?.QualifiedItemId == HorseFluteID);
         if (flute != null)
         {
             // If the player doesn't have the power, give it to them
-            if (!IsPowerUnlocked(who, powerID))
-                DoPowerUnlock(who, powerID, flute);
+            if (!IsPowerUnlocked(who))
+                DoPowerUnlock(who);
 
             // Remove the flute from the player's inventory
             who.removeItemFromInventory(flute);
@@ -86,15 +84,15 @@ public class Utils
     public static void RevertModChanges(Farmer who)
     {
         // Give the physical item back
-        Item flute = ItemRegistry.Create("(O)911");
+        Item flute = ItemRegistry.Create(HorseFluteID);
         who.addItemByMenuIfNecessary(flute);
 
-        // Remove the modData flag
-        who.modData.Remove(powerPrefix + "HorseFlute" + powerUnlockedSuffix);
+        // Falsify the modData flag
+        who.modData[PowerPrefix + PowerID + PowerUnlockedSuffix] = "false";
 
-        // [TODO] Revisit if necessary
         // Clear the cache so the Special Items tab updates
-        // Helper.GameContent.InvalidateCache("Data/Powers");
+        ModHelper.GameContent.InvalidateCache("Data/Powers");
+        ModHelper.GameContent.InvalidateCache("Data/Shops");
 
         // Log an info message so the user knows what happened
         Log.Info(I18n.Log_ModDisabledRevert());
