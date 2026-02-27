@@ -5,7 +5,6 @@
     "Config.Hotkey.Tooltip": "「特別なアイテム」タブに馬笛があるときに、馬を呼び出すためのホットキーです。",
     "HorseFlute.Name": "馬笛",
     "HorseFlute.Description": "馬を呼び出す不思議な笛。購入すると、「特別なアイテム」タブに永久に追加されます。",
-    "Log.HarmonyPatchesNotApplied": "Harmonyパッチの適用に失敗しました: {{ex}}",
     "Log.ContentPatcherRequired": "このMODの動作にはContent Patcherが必要です。Content Patcherをインストールしてから再度お試しください。",
     "Log.SummonFailed": "馬を呼べませんでした。「特別なアイテム」タブに馬笛があるか確認してから、もう一度お試しください。",
     "Log.ModDisabledRevert": "MODを無効にしました。馬笛をインベントリに戻し、能力を削除しました。"

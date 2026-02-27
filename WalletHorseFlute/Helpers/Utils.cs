@@ -27,7 +27,7 @@ public class Utils
         return who.modData.ContainsKey(key) && who.modData[key] == "true";
     }
 
-    public static void DoPowerUnlock(Farmer who)
+    public static void DoPowerUnlock(Farmer who, int? delay = null)
     {
         // Leave if the player already has the power, or the mod is disabled
         if (IsPowerUnlocked(who)) return;
@@ -41,7 +41,7 @@ public class Utils
         // Create a temporary item instance for the pose
         Item fluteAnimationItem = ItemRegistry.Create(HorseFluteID);
 
-        // Trigger the "Hold Up Item" pose
+        // Trigger the glorious pose with the new flute!
         who.holdUpItemThenMessage(fluteAnimationItem);
     }
 
