@@ -1,16 +1,13 @@
 {
-    "Name": "[CP] Wallet Horse Flute",
+    "Name": "Wallet Horse Flute Assets",
     "Author": "HeavyStarRuler",
     "Version": "1.0.0",
-    "Description": "A quality-of-life mod that moves the horse flute to the wallet and calls your horse via hotkey to clear up inventory space.",
-    "UniqueId": "HeavyStarRuler.WalletHorseFlute",
-    "EntryDll": "WalletHorseFlute.dll",
-    "MinimumApiVersion": "4.5.0",
-    "UpdateKeys": [],
+    "Description": "A quality-of-life mod that moves the horse flute to the wallet and calls your horse via configurable hotkey to clear up inventory space.",
+    "UniqueID": "HeavyStarRuler.WalletHorseFlute",
     "ContentPackFor": {
-        "UniqueId": "Pahtoschild.ContentPatcher"
+        "UniqueID": "Pathoschild.ContentPatcher"
     },
-    "Dependencies": [
-        { "UniqueId": "HeavyStarRuler.WalletHorseFluteCore", "IsRequired": true }
-    ]
+	"Dependencies": [
+		{ "UniqueID": "HeavyStarRuler.WalletHorseFluteCore", "IsRequired": true }
+	]
 }

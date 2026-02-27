@@ -1,0 +1,11 @@
+{
+    "Config.EnableMod.Label": "Habilitar Mod",
+    "Config.EnableMod.Tooltip": "Ativa ou desativa o mod.",
+    "Config.Hotkey.Label": "Chamar Cavalo",
+    "Config.Hotkey.Tooltip": "A tecla de atalho usada para invocar seu cavalo quando a Flauta de Cavalo está na aba de Itens Especiais.",
+    "HorseFlute.Name": "Flauta de Cavalo",
+    "HorseFlute.Description": "Uma flauta curiosa que invoca seu cavalo. Quando comprada, ela fica permanentemente vinculada à aba de Itens Especiais.",
+    "Log.ContentPatcherRequired": "O Content Patcher é necessário para que este mod funcione. Por favor, instale o Content Patcher e tente novamente.",
+    "Log.SummonFailed": "Não foi possível invocar o cavalo. Certifique-se de ter a Flauta de Cavalo na aba de Itens Especiais e tente novamente.",
+    "Log.ModDisabledRevert": "Mod desativado com sucesso! A Flauta de Cavalo retornou ao inventário e o poder foi removido."
+}

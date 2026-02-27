@@ -2,7 +2,7 @@
     "Config.EnableMod.Label": "Enable Mod",
     "Config.EnableMod.Tooltip": "Toggle the mod on or off.",
     "Config.Hotkey.Label": "Call Horse",
-    "Config.Hotkey.Tooltip": "The hotkey used to summon your horse when the Horse Flute is in your Special Items tab.",
+    "Config.Hotkey.Tooltip": "The hotkey(s) used to summon your horse when the Horse Flute is in your Special Items tab.",
     "HorseFlute.Name": "Horse Flute",
     "HorseFlute.Description": "A curious flute that summons your horse. When purchased, it is permanently bound to your Special Items tab.",
     "Log.ContentPatcherRequired": "Content Patcher is required for this mod to work. Please install Content Patcher and try again.",

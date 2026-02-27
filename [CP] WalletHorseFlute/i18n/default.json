@@ -1,4 +1,12 @@
 {
-    "Name": "Horse Flute",
-    "Description": "You can now call upon your valiant steed at a whim."
+    "Config.EnableMod.Label": "Enable Mod",
+    "Config.EnableMod.Tooltip": "Toggle the mod on or off.",
+    "Config.Hotkey.Label": "Call Horse",
+    "Config.Hotkey.Tooltip": "The hotkey used to summon your horse when the Horse Flute is in your Special Items tab.",
+    "HorseFlute.Name": "Horse Flute",
+    "HorseFlute.Description": "A curious flute that summons your horse. When purchased, it is permanently bound to your Special Items tab.",
+    "Log.HarmonyPatchesNotApplied": "Failed to apply Harmony patches: {{ex}}",
+    "Log.ContentPatcherRequired": "Content Patcher is required for this mod to work. Please install Content Patcher and try again.",
+    "Log.SummonFailed": "Failed to summon horse. Make sure you have the Horse Flute in your Special Items tab and try again.",
+    "Log.ModDisabledRevert": "Mod disabled successfully! Horse Flute returned to inventory and power removed."
 }

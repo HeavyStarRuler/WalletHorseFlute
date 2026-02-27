@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using StardewModdingAPI;
 
-namespace WalletHorseFlute.Utils;
+namespace WalletHorseFlute.Helpers;
 
 public class Log
 {

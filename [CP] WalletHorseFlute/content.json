@@ -2,25 +2,54 @@
     "Format": "2.8.0",
     "Changes": [
         {
-            "Action": "Load",
-            "Target": "Mods/{{ModId}}/HorseFluteIcon",
-            "FromFile": "assets/HorseFluteIcon.png"
+            "Action": "EditData",
+            "Target": "Data/Powers",
+            "When": {
+                "HeavyStarRuler.WalletHorseFluteCore/ModEnabled": "true"
+            },
+            "Entries": {
+                "{{ModId}}_HorseFlute": {
+                    "DisplayName": "{{i18n:HorseFlute.Name}}",
+                    "Description": "{{i18n:HorseFlute.Description}}",
+                    "TexturePath": "Maps\\springobjects",
+                    "TexturePosition": { "X": 368, "Y": 592 },
+                    "UnlockedCondition": "PLAYER_MOD_DATA Current {{ModId}}_HorseFlute_IsUnlocked true"
+                }
+            }
         },
         {
             "Action": "EditData",
-            "Target": "Data/Powers",
+            "Target": "Data/Shops",
+            "TargetField": [ "QiGemShop", "Items" ],
+            "When": {
+                "HeavyStarRuler.WalletHorseFluteCore/ModEnabled": "true"
+            },
             "Entries": {
+                "(O)911": null,
                 "{{ModId}}_HorseFlute": {
-                    "DisplayName": "{{i18n: Name}}",
-                    "Description": "{{i18n: Description}}",
-                    "TexturePath": "Mods/{{ModId}}/HorseFluteIcon",
-                    "TexturePosition": {
-                        "X": 0,
-                        "Y": 0
-                    },
-                    "UnlockedCondition": "PLAYER_HAS_ITEM Current (O)911"
+                    "Id": "{{ModId}}_HorseFlute",
+                    "ItemId": "(O)911",
+                    "TradeItemId": "(O)858",
+                    "TradeItemAmount": 50,
+                    "Condition": "PLAYER_MOD_DATA Current {{ModId}}_HorseFlute_IsUnlocked false",
+                    "ActionsOnPurchase": [
+                        "HeavyStarRuler.WalletHorseFluteCore_UnlockHorseFlutePower"
+                    ]
                 }
-            }
+            },
+            "MoveEntries": [
+                {
+                    "ID": "{{ModId}}_HorseFlute",
+                    "BeforeID": "(O)897"
+                },
+                {
+                    "ID": "(O)911",
+                    "BeforeID": "(O)897",
+                    "When": {
+                        "HeavyStarRuler.WalletHorseFluteCore/ModEnabled": "false"
+                    }
+                }
+            ]
         }
     ]
 }

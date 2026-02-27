@@ -1,0 +1,11 @@
+{
+    "Config.EnableMod.Label": "Activer le mod",
+    "Config.EnableMod.Tooltip": "Activez ou désactivez le mod.",
+    "Config.Hotkey.Label": "Appeler le cheval",
+    "Config.Hotkey.Tooltip": "Le raccourci utilisé pour appeler votre cheval lorsque la Flûte de cheval est dans votre onglet Objets spéciaux.",
+    "HorseFlute.Name": "Flûte de cheval",
+    "HorseFlute.Description": "Une flûte curieuse qui appelle votre cheval. Une fois achetée, elle est définitivement liée à votre onglet Objets spéciaux.",
+    "Log.ContentPatcherRequired": "Content Patcher est requis pour que ce mod fonctionne. Veuillez installer Content Patcher et réessayer.",
+    "Log.SummonFailed": "Impossible d'appeler le cheval. Assurez-vous d'avoir la Flûte de cheval dans l'onglet Objets spéciaux et réessayez.",
+    "Log.ModDisabledRevert": "Mod désactivé avec succès ! La Flûte de cheval a été remise dans l'inventaire et le pouvoir a été retiré."
+}
