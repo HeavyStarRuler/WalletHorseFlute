@@ -5,7 +5,6 @@
     "Config.Hotkey.Tooltip": "Il tasto rapido usato per evocare il tuo cavallo quando il Flauto di Cavallo è nella scheda degli Oggetti Speciali.",
     "HorseFlute.Name": "Flauto di Cavallo",
     "HorseFlute.Description": "Un curioso flauto che evoca il tuo cavallo. Quando viene acquistato, è permanentemente vincolata alla scheda Oggetti Speciali.",
-    "Log.HarmonyPatchesNotApplied": "Non è stato applicato le patch Harmony: {{ex}}",
     "Log.ContentPatcherRequired": "Content Patcher è necessario affinché questa mod funzioni. Per favore, installa Content Patcher e riprova.",
     "Log.SummonFailed": "Non sono riuscito a evocare il cavallo. Assicurati di avere il Flauto di Cavallo nella scheda Oggetti Speciali e riprova.",
     "Log.ModDisabledRevert": "Mod disabilitato con successo! Horse Flute tornò in inventario e rimossi la potenza."

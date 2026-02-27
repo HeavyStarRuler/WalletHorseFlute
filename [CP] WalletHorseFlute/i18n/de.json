@@ -5,7 +5,6 @@
     "Config.Hotkey.Tooltip": "Der Hotkey zum Rufen deines Pferdes, wenn sich die Pferdeflöte im Spezialgegenstände-Reiter befindet.",
     "HorseFlute.Name": "Pferdeflöte",
     "HorseFlute.Description": "Eine merkwürdige Flöte, die dein Pferd herbeiruft. Nach dem Kauf ist sie dauerhaft an deinen Spezialgegenstände-Reiter gebunden.",
-    "Log.HarmonyPatchesNotApplied": "Harmony-Patches konnten nicht angewendet werden: {{ex}}",
     "Log.ContentPatcherRequired": "Content Patcher wird benötigt, damit dieser Mod funktioniert. Bitte installiere Content Patcher und versuche es erneut.",
     "Log.SummonFailed": "Pferd konnte nicht gerufen werden. Vergewissere dich, dass du die Pferdeflöte im Spezialgegenstände-Reiter hast, und versuche es erneut.",
     "Log.ModDisabledRevert": "Mod erfolgreich deaktiviert! Die Pferdeflöte wurde dem Inventar hinzugefügt und die Kraft wurde entfernt."
